@@ -2,6 +2,7 @@
 
 import discord
 import logging
+import config
 from discord.ext import commands
 
 logger = logging.getLogger('discord')
@@ -10,17 +11,17 @@ handler = logging.FileHandler(filename='nolife.log', encoding='utf-8', mode='w')
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-role_message_id = 805631453924294677
+role_message_id = config.role_message_id
 
 class NoLifeBot(commands.Bot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self.emoji_to_role = {
-            '🇸': 805277339827044353, # she/her
-            '🇹': 805277388098371644, # they/them
-            '🇭': 805276868411785227, # he/him
-            '🇮': 805280679779762196  # it/its
+            '🇸': config.she_her,
+            '🇹': config.they_them,
+            '🇭': config.he_him,
+            '🇮': config.it_its
         }
 
     async def on_raw_reaction_add(self, payload):
@@ -70,18 +71,18 @@ class NoLifeBot(commands.Bot):
 bot = NoLifeBot(command_prefix='!')
 
 @bot.command()
-@commands.has_any_role(83059413090308096, 730207364241948702)
+@commands.has_any_role(config.authenticated_roles)
 async def postMsg(ctx, *, arg):
     await ctx.send(arg)
 
 @bot.command()
-@commands.has_any_role(83059413090308096, 730207364241948702)
+@commands.has_any_role(config.authenticated_roles)
 async def editRoleMsg(ctx, *, arg):
     msg = await ctx.fetch_message(role_message_id)
     await msg.edit(content=arg)
 
 @bot.command()
-@commands.has_any_role(83059413090308096, 730207364241948702)
+@commands.has_any_role(config.authenticated_roles)
 async def addInitialReactions(ctx):
     msg = await ctx.fetch_message(role_message_id)
     await msg.add_reaction('🇸')
@@ -89,4 +90,4 @@ async def addInitialReactions(ctx):
     await msg.add_reaction('🇭')
     await msg.add_reaction('🇮')
 
-bot.run('token')
+bot.run(config.token)
