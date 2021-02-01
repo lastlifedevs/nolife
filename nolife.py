@@ -59,7 +59,6 @@ class NoLifeBot(commands.Bot):
                 return
 
             member = guild.get_member(payload.user_id)
-
             if member is None:
                 return
             await member.remove_roles(role)
@@ -68,7 +67,9 @@ class NoLifeBot(commands.Bot):
         except discord.HTTPException:
             pass
 
-bot = NoLifeBot(command_prefix='!')
+intents = discord.Intents.default()
+intents.members = True
+bot = NoLifeBot(command_prefix='!', intents=intents)
 
 @bot.command()
 @commands.has_any_role(config.authenticated_roles)
