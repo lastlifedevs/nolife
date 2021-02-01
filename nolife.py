@@ -49,7 +49,7 @@ class NoLifeBot(commands.Bot):
             return
 
         try:
-            role_id = self.emoji_to_role[payload.emoji]
+            role_id = self.emoji_to_role[payload.emoji.name]
             guild = self.get_guild(payload.guild_id)
             if guild is None:
                 return
