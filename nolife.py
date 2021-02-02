@@ -74,18 +74,18 @@ intents.members = True
 bot = NoLifeBot(command_prefix='!', intents=intents)
 
 @bot.command()
-@commands.has_any_role(config.authenticated_roles)
+@commands.has_any_role(*config.authenticated_roles)
 async def postMsg(ctx, *, arg):
     await ctx.send(arg)
 
 @bot.command()
-@commands.has_any_role(config.authenticated_roles)
+@commands.has_any_role(*config.authenticated_roles)
 async def editRoleMsg(ctx, *, arg):
     msg = await ctx.fetch_message(role_message_id)
     await msg.edit(content=arg)
 
 @bot.command()
-@commands.has_any_role(config.authenticated_roles)
+@commands.has_any_role(*config.authenticated_roles)
 async def addInitialReactions(ctx):
     msg = await ctx.fetch_message(role_message_id)
     await msg.add_reaction('🇦')
