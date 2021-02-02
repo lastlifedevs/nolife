@@ -21,7 +21,9 @@ class NoLifeBot(commands.Bot):
             '🇸': config.she_her,
             '🇹': config.they_them,
             '🇭': config.he_him,
-            '🇮': config.it_its
+            '🇮': config.it_its,
+            '🇦': config.any_pronouns,
+            '❔': config.ask_for_pronouns
         }
 
     async def on_raw_reaction_add(self, payload):
@@ -86,9 +88,7 @@ async def editRoleMsg(ctx, *, arg):
 @commands.has_any_role(config.authenticated_roles)
 async def addInitialReactions(ctx):
     msg = await ctx.fetch_message(role_message_id)
-    await msg.add_reaction('🇸')
-    await msg.add_reaction('🇹')
-    await msg.add_reaction('🇭')
-    await msg.add_reaction('🇮')
+    await msg.add_reaction('🇦')
+    await msg.add_reaction('❔')
 
 bot.run(config.token)
